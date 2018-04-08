@@ -1,114 +1,91 @@
-<!DOCTYPE html>
-<html>
-  <!-- Html Head Tag-->
-  <head>
+
+ <!DOCTYPE HTML>
+<html >
+<head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="LAgagggggg">
-  <!-- Open Graph Data -->
-  <meta property="og:title" content="@property的几种属性"/>
-  <meta property="og:description" content="" />
-  <meta property="og:site_name" content="Lagagggggg&#39;s blog"/>
-  <meta property="og:type" content="article" />
-  <meta property="og:image" content="http://yoursite.com"/>
   
-    <link rel="alternate" href="/atom.xml" title="Lagagggggg&#39;s blog" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-
-  <!-- Site Title -->
-  <title>Lagagggggg's blog</title>
-
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="/css/bootstrap.min.css">
-  <!-- Custom CSS -->
-  
-  <link rel="stylesheet" href="/css/style.light.css">
-
-  <!-- Google Analytics -->
-  
-
+    <title>@property的几种属性 | Lagagggggg&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="LAgagggggg">
+    
+    <meta name="description" content="strong&amp;amp;weakstrong和weak是ARC新引入的对象变量属性，strong相当于MRC的retain，而weak相当于assign。ARC的一个基本规则即是，只要某个对象被任一strong指针指向，那么它将不会被销毁。如果对象没有被任何strong指针指向，那么就将被销毁。这就像">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/favicon.jpg">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 
   <body>
-    <!-- Page Header -->
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="Lagagggggg&#39;s blog" title="Lagagggggg&#39;s blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Lagagggggg&#39;s blog">Lagagggggg&#39;s blog</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
 
-
-<header class="site-header header-background" style="background-image: url(/img/default-banner-dark.jpg)">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="page-title with-background-image">
-          <p class="title">@property的几种属性</p>
-          <p class="subtitle"></p>
-        </div>
-        <div class="site-menu with-background-image">
-          <ul>
-            
-              <li>
-                <a href="/">
-                  
-                  Home
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="/archives">
-                  
-                  Archives
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="https://github.com/<LAgagggggg>">
-                  
-                  Github
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="mailto:<15807814960@163.com>">
-                  
-                  Email
-                  
-                </a>
-              </li>
-            
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/11/12/property的几种属性/" title="@property的几种属性" itemprop="url">@property的几种属性</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://yoursite.com" title="LAgagggggg">LAgagggggg</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2017-11-12T09:05:01.000Z" itemprop="datePublished">2017-11-12</time>
+    Updated:<time datetime="2018-04-08T09:17:46.636Z" itemprop="dateModified">2018-04-08</time>
+    
+  </p>
 </header>
-
-<article>
-  <div class="container typo">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="post-info text-muted">
-          
-            <!-- Author -->
-            <span class="author info">By LAgagggggg</span>
-          
-          <!-- Date -->
-          <span class="date-time info">On
-            <span class="date">2017-11-12</span>
-            <span class="time">17:57:52</span>
-          </span>
-          
-        </div>
-        <!-- Tags -->
-        
-        <!-- Post Main Content -->
-        <div class="post-content">
-          <h2 id="strong-amp-weak"><a href="#strong-amp-weak" class="headerlink" title="strong&amp;weak"></a>strong&amp;weak</h2><p><strong>strong</strong>和<strong>weak</strong>是<strong>ARC</strong>新引入的对象变量属性，<strong>strong</strong>相当于MRC的<strong>retain</strong>，而<strong>weak</strong>相当于<strong>assign</strong>。<br>ARC的一个基本规则即是，只要某个对象被任一<strong>strong</strong>指针指向，那么它将不会被销毁。如果对象没有被任何<strong>strong</strong>指针指向，那么就将被销毁。这就像放风筝，对象相当于风筝，<strong>strong</strong>引用就像一根线，一个风筝可以连多根线，只要还有一根线连着风筝就不会飘走；而<strong>weak</strong>引用就像用望远镜看风筝，你可以欣赏到它的美，但你不能阻止它飘走。</p>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#strong-amp-weak"><span class="toc-number">1.</span> <span class="toc-text">strong&amp;weak</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#atomic-amp-nonatomic"><span class="toc-number">2.</span> <span class="toc-text">atomic&amp;nonatomic</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#retain-amp-assign"><span class="toc-number">3.</span> <span class="toc-text">retain&amp;assign</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#copy"><span class="toc-number">4.</span> <span class="toc-text">copy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#redawrite-amp-readonly"><span class="toc-number">5.</span> <span class="toc-text">redawrite&amp;readonly</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#synthesize"><span class="toc-number"></span> <span class="toc-text">@synthesize</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#dynamic"><span class="toc-number"></span> <span class="toc-text">@dynamic</span></a>
+		</div>
+		
+		<h2 id="strong-amp-weak"><a href="#strong-amp-weak" class="headerlink" title="strong&amp;weak"></a>strong&amp;weak</h2><p><strong>strong</strong>和<strong>weak</strong>是<strong>ARC</strong>新引入的对象变量属性，<strong>strong</strong>相当于MRC的<strong>retain</strong>，而<strong>weak</strong>相当于<strong>assign</strong>。<br>ARC的一个基本规则即是，只要某个对象被任一<strong>strong</strong>指针指向，那么它将不会被销毁。如果对象没有被任何<strong>strong</strong>指针指向，那么就将被销毁。这就像放风筝，对象相当于风筝，<strong>strong</strong>引用就像一根线，一个风筝可以连多根线，只要还有一根线连着风筝就不会飘走；而<strong>weak</strong>引用就像用望远镜看风筝，你可以欣赏到它的美，但你不能阻止它飘走。</p>
 <h2 id="atomic-amp-nonatomic"><a href="#atomic-amp-nonatomic" class="headerlink" title="atomic&amp;nonatomic"></a>atomic&amp;nonatomic</h2><p><strong>atomic</strong>(原子性)：默认属性，编辑器合成的getter和setter方法会保证get、set操作的完整性，不受其它线程的影响。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">- (void)setName:(NSString *)name &#123;</span><br><span class="line">    @synchronized (self) &#123;</span><br><span class="line">        if (_name != name) &#123;</span><br><span class="line">            [_name release];</span><br><span class="line">            _name = [name retain];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (NSString *)name &#123;</span><br><span class="line">    @synchronized (self) &#123;</span><br><span class="line">        return _name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>然而atomic并不能保证线程安全</strong>，它会增加正确的几率，能够更好的避免线程错误，但仍旧是不安全的。<br>一般情况下，iOS程序的所有属性都声明为<strong>nonatomic</strong>，是因为。在iOS中使用同步锁的开销比较大，这会带来性能问题，并且<strong>atomic</strong>并不能保证线程安全。想要实现线程安全，还需要采用更为深层的锁定机制。<br>关于<strong>@synchronized</strong>，这篇博文：<a href="http://blog.csdn.net/hopedark/article/details/49640939" target="_blank" rel="noopener">iOS开发笔记–关于 @synchronized，这儿比你想知道的还要多 </a>讲得非常详细</p>
@@ -129,43 +106,189 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@synthesize propertyName=asuijhdiuahwdiuawbndjbawjhbfc</span><br></pre></td></tr></table></figure>
 <p>好的，现在你可以用<em>asuijhdiuahwdiuawbndjbawjhbfc</em>来访问属性了。</p>
 <h1 id="dynamic"><a href="#dynamic" class="headerlink" title="@dynamic"></a>@dynamic</h1><p>dynamic中文意思为‘动态’，添加<strong>@dynamic</strong>语句后，<strong>编译器不会自动生成getter和setter方法，需要自己实现。</strong><br>有些存取是在运行时动态创建的，如在CoreData的NSManagedObject类使用的某些。如果你想在这些情况下，声明和使用属性，但要避免缺少方法在编译时的警告，你可以使用<strong>@dynamic</strong>动态指令，而不是<strong>@synthesize</strong>合成指令。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
 
-        </div>
-      </div>
-    </div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://yoursite.com/2017/11/12/property的几种属性/" data-title="@property的几种属性 | Lagagggggg&#39;s blog" data-tsina="" class="share clearfix">
   </div>
-</article>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2018/01/11/iOSRE常用指令/" title="iOSRE常用操作">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  iOSRE常用操作</span>
+</a>
+</div>
 
 
+</nav>
 
-    <!-- Footer -->
-<footer>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <p class="copyright text-muted">
-          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
-          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
-        <p class="copyright text-muted">
-          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
-        </p>
-      </div>
-    </div>
+	
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#strong-amp-weak"><span class="toc-number">1.</span> <span class="toc-text">strong&amp;weak</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#atomic-amp-nonatomic"><span class="toc-number">2.</span> <span class="toc-text">atomic&amp;nonatomic</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#retain-amp-assign"><span class="toc-number">3.</span> <span class="toc-text">retain&amp;assign</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#copy"><span class="toc-number">4.</span> <span class="toc-text">copy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#redawrite-amp-readonly"><span class="toc-number">5.</span> <span class="toc-text">redawrite&amp;readonly</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#synthesize"><span class="toc-number"></span> <span class="toc-text">@synthesize</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#dynamic"><span class="toc-number"></span> <span class="toc-text">@dynamic</span></a>
   </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+
+  <div class="rsspart">
+	<a href="" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<div class="social-font clearfix">
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2018 
+		
+		<a href="http://yoursite.com" target="_blank" title="LAgagggggg">LAgagggggg</a>
+		
+		</p>
+</div>
 </footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
 
 
-    <!-- After Footer Scripts -->
-<script src="/js/highlight.pack.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function(event) {
-    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
-    codeBlocks.forEach(function(block, index) {
-      hljs.highlightBlock(block);
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
     });
   });
+});     
 </script>
+
+
+
+
+
 
   </body>
 </html>
-

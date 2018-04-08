@@ -62,10 +62,10 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-test-my-site" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-property的几种属性" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/04/08/test-my-site/" class="article-date">
-  <time datetime="2018-04-08T08:45:30.000Z" itemprop="datePublished">2018-04-08</time>
+    <a href="/2018/04/08/property的几种属性/" class="article-date">
+  <time datetime="2018-04-08T09:05:01.000Z" itemprop="datePublished">2018-04-08</time>
 </a>
     
   </div>
@@ -76,7 +76,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/08/test-my-site/">test_my_site</a>
+      <a class="article-title" href="/2018/04/08/property的几种属性/">@property的几种属性</a>
     </h1>
   
 
@@ -84,11 +84,33 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>#@Property的几种属性</p>
+<p>##strong&amp;weak<br><strong>strong</strong>和<strong>weak</strong>是<strong>ARC</strong>新引入的对象变量属性，<strong>strong</strong>相当于MRC的<strong>retain</strong>，而<strong>weak</strong>相当于<strong>assign</strong>。<br>ARC的一个基本规则即是，只要某个对象被任一<strong>strong</strong>指针指向，那么它将不会被销毁。如果对象没有被任何<strong>strong</strong>指针指向，那么就将被销毁。这就像放风筝，对象相当于风筝，<strong>strong</strong>引用就像一根线，一个风筝可以连多根线，只要还有一根线连着风筝就不会飘走；而<strong>weak</strong>引用就像用望远镜看风筝，你可以欣赏到它的美，但你不能阻止它飘走。</p>
+<p>##atomic&amp;nonatomic<br><strong>atomic</strong>(原子性)：默认属性，编辑器合成的getter和setter方法会保证get、set操作的完整性，不受其它线程的影响。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">- (void)setName:(NSString *)name &#123;</span><br><span class="line">    @synchronized (self) &#123;</span><br><span class="line">        if (_name != name) &#123;</span><br><span class="line">            [_name release];</span><br><span class="line">            _name = [name retain];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (NSString *)name &#123;</span><br><span class="line">    @synchronized (self) &#123;</span><br><span class="line">        return _name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>然而atomic并不能保证线程安全</strong>，它会增加正确的几率，能够更好的避免线程错误，但仍旧是不安全的。<br>一般情况下，iOS程序的所有属性都声明为<strong>nonatomic</strong>，是因为。在iOS中使用同步锁的开销比较大，这会带来性能问题，并且<strong>atomic</strong>并不能保证线程安全。想要实现线程安全，还需要采用更为深层的锁定机制。<br>关于<strong>@synchronized</strong>，这篇博文：<a href="http://blog.csdn.net/hopedark/article/details/49640939" target="_blank" rel="noopener">iOS开发笔记–关于 @synchronized，这儿比你想知道的还要多 </a>讲得非常详细</p>
+<p>##retain&amp;assign<br><strong>retain</strong>和<strong>assign</strong>是<strong>MRC</strong>时期的关键字<br>使用<strong>retain</strong>属性后自动生成的setter方法与下类似：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-(void)setName:(test *)newname &#123;  </span><br><span class="line">    if (_name!= newname) &#123;  </span><br><span class="line">　　      [_name release];  </span><br><span class="line">　　      _name= [newname retain];  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这会使对象的<strong>引用计数器</strong>+1<br>而assing属性生成的setter方法会直接赋值而不进行retain操作。</p>
+<p>##copy<br>使用<strong>copy</strong>属性生成的setter方法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-(void)setName:(test *)newname &#123;  </span><br><span class="line">    if (_name!= newname) &#123;  </span><br><span class="line">　　      [_name release];  </span><br><span class="line">　　      _name= [newname copy];  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这与上面<strong>retain</strong>生成的setter方法很类似，只是在赋值时使用的是<strong>copy</strong>方法，让我们回到放风筝的例子里，使用<strong>copy</strong>属性就相当于你看到一个风筝很好看，你也想放那个风筝，那么你并不会从那个风筝上多连一根线到你手上，而是去买<strong>一个一模一样的风筝</strong>到<strong>旁边的一块地方</strong>放你自己的风筝，这就是<strong>copy</strong>。<br>值得注意的是，重写copy类型的setter方法时记得在赋值时用copy，否则外面的copy就是摆设。</p>
+<p>##redawrite&amp;readonly<br>这两个属性的作用正如它们的名字所述：</p>
+<ul>
+<li><strong>readwrite</strong>: 产生<strong><strong>setter\getter</strong></strong>方法</li>
+<li><strong>readonly</strong>: 只产生getter,没有setter。</li>
+</ul>
+<p>#@synthesize<br><strong>synthesize</strong>中文意思为‘合成’，添加对应属性的<strong>@synthsize</strong>语句后，在编译的过程中，编译器会帮你自动生成<strong>getter</strong>和<strong>setter</strong>方法，<strong>而现在的</strong>XCode<strong>在你声明属性后会自动帮你添加@synthesize语句：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@synthesize propertyName</span><br></pre></td></tr></table></figure>
+<p>这样你就可以通过_propertyName或者self.propertyName来访问属性了，不过，<strong>@synthesize</strong>还有这样的写法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@synthesize propertyName=asuijhdiuahwdiuawbndjbawjhbfc</span><br></pre></td></tr></table></figure>
+<p>好的，现在你可以用<em>asuijhdiuahwdiuawbndjbawjhbfc</em>来访问属性了。</p>
+<p>#@dynamic<br>dynamic中文意思为‘动态’，添加<strong>@dynamic</strong>语句后，<strong>编译器不会自动生成getter和setter方法，需要自己实现。</strong><br>有些存取是在运行时动态创建的，如在CoreData的NSManagedObject类使用的某些。如果你想在这些情况下，声明和使用属性，但要避免缺少方法在编译时的警告，你可以使用<strong>@dynamic</strong>动态指令，而不是<strong>@synthesize</strong>合成指令。</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/08/test-my-site/" data-id="cjfqkis620001tczvw1tuna48" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/04/08/property的几种属性/" data-id="cjfql2p2r0002xqzvaj9rv0mm" class="article-share-link">Share</a>
       
       
     </footer>
@@ -133,7 +155,55 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/08/hello-world/" data-id="cjfqkis5y0000tczv8sxv1dpj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/04/08/hello-world/" data-id="cjfql2p2o0001xqzvruw9emdt" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-@Property的几种属性" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/11/12/@Property的几种属性/" class="article-date">
+  <time datetime="2017-11-11T17:43:41.122Z" itemprop="datePublished">2017-11-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#@Property的几种属性</p>
+<p>##strong&amp;weak<br><strong>strong</strong>和<strong>weak</strong>是<strong>ARC</strong>新引入的对象变量属性，<strong>strong</strong>相当于MRC的<strong>retain</strong>，而<strong>weak</strong>相当于<strong>assign</strong>。<br>ARC的一个基本规则即是，只要某个对象被任一<strong>strong</strong>指针指向，那么它将不会被销毁。如果对象没有被任何<strong>strong</strong>指针指向，那么就将被销毁。这就像放风筝，对象相当于风筝，<strong>strong</strong>引用就像一根线，一个风筝可以连多根线，只要还有一根线连着风筝就不会飘走；而<strong>weak</strong>引用就像用望远镜看风筝，你可以欣赏到它的美，但你不能阻止它飘走。</p>
+<p>##atomic&amp;nonatomic<br><strong>atomic</strong>(原子性)：默认属性，编辑器合成的getter和setter方法会保证get、set操作的完整性，不受其它线程的影响。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">- (void)setName:(NSString *)name &#123;</span><br><span class="line">    @synchronized (self) &#123;</span><br><span class="line">        if (_name != name) &#123;</span><br><span class="line">            [_name release];</span><br><span class="line">            _name = [name retain];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (NSString *)name &#123;</span><br><span class="line">    @synchronized (self) &#123;</span><br><span class="line">        return _name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>然而atomic并不能保证线程安全</strong>，它会增加正确的几率，能够更好的避免线程错误，但仍旧是不安全的。<br>一般情况下，iOS程序的所有属性都声明为<strong>nonatomic</strong>，是因为。在iOS中使用同步锁的开销比较大，这会带来性能问题，并且<strong>atomic</strong>并不能保证线程安全。想要实现线程安全，还需要采用更为深层的锁定机制。<br>关于<strong>@synchronized</strong>，这篇博文：<a href="http://blog.csdn.net/hopedark/article/details/49640939" target="_blank" rel="noopener">iOS开发笔记–关于 @synchronized，这儿比你想知道的还要多 </a>讲得非常详细</p>
+<p>##retain&amp;assign<br><strong>retain</strong>和<strong>assign</strong>是<strong>MRC</strong>时期的关键字<br>使用<strong>retain</strong>属性后自动生成的setter方法与下类似：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-(void)setName:(test *)newname &#123;  </span><br><span class="line">    if (_name!= newname) &#123;  </span><br><span class="line">　　      [_name release];  </span><br><span class="line">　　      _name= [newname retain];  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这会使对象的<strong>引用计数器</strong>+1<br>而assing属性生成的setter方法会直接赋值而不进行retain操作。</p>
+<p>##copy<br>使用<strong>copy</strong>属性生成的setter方法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-(void)setName:(test *)newname &#123;  </span><br><span class="line">    if (_name!= newname) &#123;  </span><br><span class="line">　　      [_name release];  </span><br><span class="line">　　      _name= [newname copy];  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这与上面<strong>retain</strong>生成的setter方法很类似，只是在赋值时使用的是<strong>copy</strong>方法，让我们回到放风筝的例子里，使用<strong>copy</strong>属性就相当于你看到一个风筝很好看，你也想放那个风筝，那么你并不会从那个风筝上多连一根线到你手上，而是去买<strong>一个一模一样的风筝</strong>到<strong>旁边的一块地方</strong>放你自己的风筝，这就是<strong>copy</strong>。<br>值得注意的是，重写copy类型的setter方法时记得在赋值时用copy，否则外面的copy就是摆设。</p>
+<p>##redawrite&amp;readonly<br>这两个属性的作用正如它们的名字所述：</p>
+<ul>
+<li><strong>readwrite</strong>: 产生<strong><strong>setter\getter</strong></strong>方法</li>
+<li><strong>readonly</strong>: 只产生getter,没有setter。</li>
+</ul>
+<p>#@synthesize<br><strong>synthesize</strong>中文意思为‘合成’，添加对应属性的<strong>@synthsize</strong>语句后，在编译的过程中，编译器会帮你自动生成<strong>getter</strong>和<strong>setter</strong>方法，<strong>而现在的</strong>XCode<strong>在你声明属性后会自动帮你添加@synthesize语句：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@synthesize propertyName</span><br></pre></td></tr></table></figure>
+<p>这样你就可以通过_propertyName或者self.propertyName来访问属性了，不过，<strong>@synthesize</strong>还有这样的写法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@synthesize propertyName=asuijhdiuahwdiuawbndjbawjhbfc</span><br></pre></td></tr></table></figure>
+<p>好的，现在你可以用<em>asuijhdiuahwdiuawbndjbawjhbfc</em>来访问属性了。</p>
+<p>#@dynamic<br>dynamic中文意思为‘动态’，添加<strong>@dynamic</strong>语句后，<strong>编译器不会自动生成getter和setter方法，需要自己实现。</strong><br>有些存取是在运行时动态创建的，如在CoreData的NSManagedObject类使用的某些。如果你想在这些情况下，声明和使用属性，但要避免缺少方法在编译时的警告，你可以使用<strong>@dynamic</strong>动态指令，而不是<strong>@synthesize</strong>合成指令。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/11/12/@Property的几种属性/" data-id="cjfql2p2k0000xqzvl8bxxadp" class="article-share-link">Share</a>
       
       
     </footer>
@@ -161,7 +231,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
     </div>
   </div>
 
@@ -174,11 +244,15 @@
       <ul>
         
           <li>
-            <a href="/2018/04/08/test-my-site/">test_my_site</a>
+            <a href="/2018/04/08/property的几种属性/">@property的几种属性</a>
           </li>
         
           <li>
             <a href="/2018/04/08/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/12/@Property的几种属性/">(no title)</a>
           </li>
         
       </ul>

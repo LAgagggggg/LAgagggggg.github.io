@@ -7,17 +7,17 @@
   
   <title>@property的几种属性 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="#@Property的几种属性 ##strong&amp;amp;weakstrong和weak是ARC新引入的对象变量属性，strong相当于MRC的retain，而weak相当于assign。ARC的一个基本规则即是，只要某个对象被任一strong指针指向，那么它将不会被销毁。如果对象没有被任何strong指针指向，那么就将被销毁。这就像放风筝，对象相当于风筝，strong引用就像一根线，一个风筝可以">
+  <meta name="description" content="strong&amp;amp;weakstrong和weak是ARC新引入的对象变量属性，strong相当于MRC的retain，而weak相当于assign。ARC的一个基本规则即是，只要某个对象被任一strong指针指向，那么它将不会被销毁。如果对象没有被任何strong指针指向，那么就将被销毁。这就像放风筝，对象相当于风筝，strong引用就像一根线，一个风筝可以连多根线，只要还有一根线连着风筝就不">
 <meta property="og:type" content="article">
 <meta property="og:title" content="@property的几种属性">
 <meta property="og:url" content="http://yoursite.com/2017/11/12/property的几种属性/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="#@Property的几种属性 ##strong&amp;amp;weakstrong和weak是ARC新引入的对象变量属性，strong相当于MRC的retain，而weak相当于assign。ARC的一个基本规则即是，只要某个对象被任一strong指针指向，那么它将不会被销毁。如果对象没有被任何strong指针指向，那么就将被销毁。这就像放风筝，对象相当于风筝，strong引用就像一根线，一个风筝可以">
+<meta property="og:description" content="strong&amp;amp;weakstrong和weak是ARC新引入的对象变量属性，strong相当于MRC的retain，而weak相当于assign。ARC的一个基本规则即是，只要某个对象被任一strong指针指向，那么它将不会被销毁。如果对象没有被任何strong指针指向，那么就将被销毁。这就像放风筝，对象相当于风筝，strong引用就像一根线，一个风筝可以连多根线，只要还有一根线连着风筝就不">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-04-08T09:13:04.696Z">
+<meta property="og:updated_time" content="2018-04-08T09:15:13.451Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="@property的几种属性">
-<meta name="twitter:description" content="#@Property的几种属性 ##strong&amp;amp;weakstrong和weak是ARC新引入的对象变量属性，strong相当于MRC的retain，而weak相当于assign。ARC的一个基本规则即是，只要某个对象被任一strong指针指向，那么它将不会被销毁。如果对象没有被任何strong指针指向，那么就将被销毁。这就像放风筝，对象相当于风筝，strong引用就像一根线，一个风筝可以">
+<meta name="twitter:description" content="strong&amp;amp;weakstrong和weak是ARC新引入的对象变量属性，strong相当于MRC的retain，而weak相当于assign。ARC的一个基本规则即是，只要某个对象被任一strong指针指向，那么它将不会被销毁。如果对象没有被任何strong指针指向，那么就将被销毁。这就像放风筝，对象相当于风筝，strong引用就像一根线，一个风筝可以连多根线，只要还有一根线连着风筝就不">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -86,9 +86,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>#@Property的几种属性</p>
-<p>##strong&amp;weak<br><strong>strong</strong>和<strong>weak</strong>是<strong>ARC</strong>新引入的对象变量属性，<strong>strong</strong>相当于MRC的<strong>retain</strong>，而<strong>weak</strong>相当于<strong>assign</strong>。<br>ARC的一个基本规则即是，只要某个对象被任一<strong>strong</strong>指针指向，那么它将不会被销毁。如果对象没有被任何<strong>strong</strong>指针指向，那么就将被销毁。这就像放风筝，对象相当于风筝，<strong>strong</strong>引用就像一根线，一个风筝可以连多根线，只要还有一根线连着风筝就不会飘走；而<strong>weak</strong>引用就像用望远镜看风筝，你可以欣赏到它的美，但你不能阻止它飘走。</p>
-<p>##atomic&amp;nonatomic<br><strong>atomic</strong>(原子性)：默认属性，编辑器合成的getter和setter方法会保证get、set操作的完整性，不受其它线程的影响。</p>
+        <h2 id="strong-amp-weak"><a href="#strong-amp-weak" class="headerlink" title="strong&amp;weak"></a>strong&amp;weak</h2><p><strong>strong</strong>和<strong>weak</strong>是<strong>ARC</strong>新引入的对象变量属性，<strong>strong</strong>相当于MRC的<strong>retain</strong>，而<strong>weak</strong>相当于<strong>assign</strong>。<br>ARC的一个基本规则即是，只要某个对象被任一<strong>strong</strong>指针指向，那么它将不会被销毁。如果对象没有被任何<strong>strong</strong>指针指向，那么就将被销毁。这就像放风筝，对象相当于风筝，<strong>strong</strong>引用就像一根线，一个风筝可以连多根线，只要还有一根线连着风筝就不会飘走；而<strong>weak</strong>引用就像用望远镜看风筝，你可以欣赏到它的美，但你不能阻止它飘走。</p>
+<h2 id="atomic-amp-nonatomic"><a href="#atomic-amp-nonatomic" class="headerlink" title="atomic&amp;nonatomic"></a>atomic&amp;nonatomic</h2><p><strong>atomic</strong>(原子性)：默认属性，编辑器合成的getter和setter方法会保证get、set操作的完整性，不受其它线程的影响。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">- (void)setName:(NSString *)name &#123;</span><br><span class="line">    @synchronized (self) &#123;</span><br><span class="line">        if (_name != name) &#123;</span><br><span class="line">            [_name release];</span><br><span class="line">            _name = [name retain];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (NSString *)name &#123;</span><br><span class="line">    @synchronized (self) &#123;</span><br><span class="line">        return _name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>然而atomic并不能保证线程安全</strong>，它会增加正确的几率，能够更好的避免线程错误，但仍旧是不安全的。<br>一般情况下，iOS程序的所有属性都声明为<strong>nonatomic</strong>，是因为。在iOS中使用同步锁的开销比较大，这会带来性能问题，并且<strong>atomic</strong>并不能保证线程安全。想要实现线程安全，还需要采用更为深层的锁定机制。<br>关于<strong>@synchronized</strong>，这篇博文：<a href="http://blog.csdn.net/hopedark/article/details/49640939" target="_blank" rel="noopener">iOS开发笔记–关于 @synchronized，这儿比你想知道的还要多 </a>讲得非常详细</p>
 <p>##retain&amp;assign<br><strong>retain</strong>和<strong>assign</strong>是<strong>MRC</strong>时期的关键字<br>使用<strong>retain</strong>属性后自动生成的setter方法与下类似：</p>
@@ -112,7 +111,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/12/property的几种属性/" data-id="cjfqlbqc100010szv6929c3er" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/12/property的几种属性/" data-id="cjfqleo68000147zv5vc6a7sw" class="article-share-link">Share</a>
       
       
     </footer>

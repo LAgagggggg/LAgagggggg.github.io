@@ -1,0 +1,319 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>iOS应用越狱检测与反越狱检测与反反越狱检测 | Lagagggggg&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="LAgagggggg">
+    
+    <meta name="description" content="iOS应用开发者通常不太注意应用的安全防护（一般情况是完全没有防护），而随着越来越多人研究iOS逆向，以及iOS11越狱的发布，iOS的安全防护也应该得到重视。作为iOS逆向的首选练手对象，微信会检测用户是否越狱，如果发现越狱了可以对一些功能比如指纹支付等进行限制，我们先来看一下微信是怎么检测越狱的">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/lagagggggg.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/lagagggggg.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="Lagagggggg&#39;s blog" title="Lagagggggg&#39;s blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Lagagggggg&#39;s blog">Lagagggggg&#39;s blog</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/04/21/iOS应用越狱检测与反越狱检测与反反越狱检测/" title="iOS应用越狱检测与反越狱检测与反反越狱检测" itemprop="url">iOS应用越狱检测与反越狱检测与反反越狱检测</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://yoursite.com" title="LAgagggggg">LAgagggggg</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2018-04-21T06:04:14.000Z" itemprop="datePublished">2018-04-21</time>
+    Updated:<time datetime="2018-04-21T06:05:31.260Z" itemprop="dateModified">2018-04-21</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS应用开发者通常不太注意应用的安全防护（一般情况是完全没有防护），而随着越来越多人研究iOS逆向，以及iOS11越狱的发布，iOS的安全防护也应该得到重视。"><span class="toc-number">1.</span> <span class="toc-text">iOS应用开发者通常不太注意应用的安全防护（一般情况是完全没有防护），而随着越来越多人研究iOS逆向，以及iOS11越狱的发布，iOS的安全防护也应该得到重视。</span></a></li></ol>
+		</div>
+		
+		<h2 id="iOS应用开发者通常不太注意应用的安全防护（一般情况是完全没有防护），而随着越来越多人研究iOS逆向，以及iOS11越狱的发布，iOS的安全防护也应该得到重视。"><a href="#iOS应用开发者通常不太注意应用的安全防护（一般情况是完全没有防护），而随着越来越多人研究iOS逆向，以及iOS11越狱的发布，iOS的安全防护也应该得到重视。" class="headerlink" title="iOS应用开发者通常不太注意应用的安全防护（一般情况是完全没有防护），而随着越来越多人研究iOS逆向，以及iOS11越狱的发布，iOS的安全防护也应该得到重视。"></a>iOS应用开发者通常不太注意应用的安全防护（一般情况是完全没有防护），而随着越来越多人研究iOS逆向，以及iOS11越狱的发布，iOS的安全防护也应该得到重视。</h2><p>作为iOS逆向的首选练手对象，微信会检测用户是否越狱，如果发现越狱了可以对一些功能比如指纹支付等进行限制，我们先来看一下微信是怎么检测越狱的。</p>
+<p>首先用Hopper打开微信的执行文件，全局搜索jail，就能看到那么多与越狱检测相关的方法。</p>
+<div align="center"><br><img src="media/15232715926878/15232722346513.jpg" style="zoom:40%"><br></div><br>OK,fine.<br><br>我们先进入 [MidasIAPCommonUtility isDeviceJailBroken]看看<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"> sub_100893904:</span><br><span class="line">0000000100893904         stp        x22, x21, [sp, #-0x30]!                     ; Objective C Block defined at 0x1036db330, DATA XREF=0x1036db340</span><br><span class="line">0000000100893908         stp        x20, x19, [sp, #0x10]</span><br><span class="line">000000010089390c         stp        x29, x30, [sp, #0x20]</span><br><span class="line">0000000100893910         add        x29, sp, #0x20</span><br><span class="line">0000000100893914         adrp       x21, #0x104103000                           ; @selector(setSampleratio:)</span><br><span class="line">0000000100893918         ldr        x0, [x21, #0xf08]                           ; objc_cls_ref_NSFileManager,_OBJC_CLASS_$_NSFileManager</span><br><span class="line">000000010089391c         adrp       x8, #0x104071000</span><br><span class="line">0000000100893920         ldr        x19, [x8, #0x138]                           ; &quot;defaultManager&quot;,@selector(defaultManager)</span><br><span class="line">0000000100893924         mov        x1, x19</span><br><span class="line">0000000100893928         bl         imp___stubs__objc_msgSend</span><br><span class="line">000000010089392c         adrp       x8, #0x104078000                            ; @selector(m_nsJsAppId)</span><br><span class="line">0000000100893930         ldr        x20, [x8, #0x700]                           ; &quot;fileExistsAtPath:&quot;,@selector(fileExistsAtPath:)</span><br><span class="line">0000000100893934         adrp       x2, #0x1037b8000</span><br><span class="line">0000000100893938         add        x2, x2, #0xb58                              ; @&quot;/Applications/Cydia.app&quot;</span><br><span class="line">000000010089393c         mov        x1, x20</span><br><span class="line">0000000100893940         bl         imp___stubs__objc_msgSend</span><br><span class="line">0000000100893944         cbz        w0, loc_100893954</span><br></pre></td></tr></table></figure><br><br>好的很明显这里的越狱检测是通过检查是否存在Cydia实现的，就类似于下面这样：<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-(BOOL)isJailBroken&#123;</span><br><span class="line">    if ([[NSFileManager defaultManager]fileExistsAtPath:@&quot;/Applications/Cydia.app&quot;]) &#123;</span><br><span class="line">        return YES;</span><br><span class="line">    &#125;</span><br><span class="line">    else return NO;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><br>当然这种你要是写成那样我不绕过都觉得对不起我自己，只需要轻轻hook一下：<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">%hook xxxController</span><br><span class="line">-(BOOL)isJailBroken&#123;</span><br><span class="line">    return NO;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><br><strong>不过</strong>就算把检测方法写得比较复杂或者进行校验，攻击者也可以更改越狱软件安装路径曲线救国…<br><br>我们还可以看到[JailBreakHelper JailBroken]这个名字也很可疑，我们再来看看这个方法。该方法里有这样一些代码：<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">___stack_chk_guard_1036b1528,___stack_chk_guard</span><br><span class="line">0000000102d5418c         ldr        x8, x8</span><br><span class="line">0000000102d54190         stur       x8, [x29, #-0x58]</span><br><span class="line">0000000102d54194         adrp       x8, #0x104103000                            ; @selector(setSampleratio:)</span><br><span class="line">0000000102d54198         ldr        x0, [x8, #0xf00]                            ; objc_cls_ref_NSArray,_OBJC_CLASS_$_NSArray</span><br><span class="line">0000000102d5419c         adrp       x8, #0x104074000                            ; @selector(setActionCode:)</span><br><span class="line">0000000102d541a0         ldr        x1, [x8, #0x9e0]                            ; &quot;arrayWithObjects:&quot;,@selector(arrayWithObjects:)</span><br><span class="line">0000000102d541a4         adrp       x8, #0x103911000</span><br><span class="line">0000000102d541a8         add        x8, x8, #0xcf8                              ; @&quot;/etc/ssh/sshd_config&quot;</span><br><span class="line">0000000102d541ac         stp        x8, xzr, [sp, #0x30]</span><br><span class="line">0000000102d541b0         adrp       x8, #0x103911000</span><br><span class="line">0000000102d541b4         add        x8, x8, #0xcd8                              ; @&quot;/usr/libexec/ssh-keysign&quot;</span><br><span class="line">0000000102d541b8         adrp       x9, #0x103911000</span><br><span class="line">0000000102d541bc         add        x9, x9, #0xcb8                              ; @&quot;/usr/sbin/sshd&quot;</span><br><span class="line">0000000102d541c0         stp        x9, x8, [sp, #0x20]</span><br><span class="line">0000000102d541c4         adrp       x8, #0x103911000</span><br><span class="line">0000000102d541c8         add        x8, x8, #0xc98                              ; @&quot;/bin/sh&quot;</span><br><span class="line">0000000102d541cc         adrp       x9, #0x103911000</span><br><span class="line">0000000102d541d0         add        x9, x9, #0xc78                              ; @&quot;/bin/bash&quot;</span><br><span class="line">0000000102d541d4         stp        x9, x8, [sp, #0x10]</span><br><span class="line">0000000102d541d8         adrp       x8, #0x103911000</span><br><span class="line">0000000102d541dc         add        x8, x8, #0xc58                              ; @&quot;/etc/apt&quot;</span><br><span class="line">0000000102d541e0         adrp       x9, #0x103911000</span><br><span class="line">0000000102d541e4         add        x9, x9, #0xc38                              ; @&quot;/Applications/Cydia.app/&quot;</span><br><span class="line">0000000102d541e8         stp        x9, x8, sp</span><br><span class="line">0000000102d541ec         adrp       x2, #0x103911000</span><br><span class="line">0000000102d541f0         add        x2, x2, #0xc18                              ; @&quot;/Library/MobileSubstrate/MobileSubstrate.dylib&quot;</span><br><span class="line">0000000102d541f4         bl         imp___stubs__objc_msgSend</span><br></pre></td></tr></table></figure><br><br>可以看出来在这个方法中创建了一个数组，里面放了一些这样的字符串：@”/Applications/Cydia.app/“、@”/Library/MobileSubstrate/MobileSubstrate.dylib”，都是一些敏感路径，换汤不换药啊朋友。<br><br>类似的方法还有很多，比如尝试获取应用列表，而只有越狱设备才有权限获取应用列表：<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">-(void)tryGetApp&#123;</span><br><span class="line">    if ([[NSFileManager defaultManager] fileExistsAtPath:@&quot;/User/Applications/&quot;])&#123;</span><br><span class="line">        NSLog(@&quot;This Device is JailBroken&quot;);</span><br><span class="line">        NSArray *applist = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:@&quot;/User/Applications/&quot; error:nil];</span><br><span class="line">        NSLog(@&quot;applist : %@&quot;,applist);</span><br><span class="line">    &#125;</span><br><span class="line">    else&#123;</span><br><span class="line">        NSLog(@&quot;Path Not Exists&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><br>在越狱设备上会看到看到这样的输出。<br><div align="center"><br><img src="media/15232715926878/15232862203790.jpg" style="zoom:40%"><br></div><br>当然办法总比问题多，攻击者可以hook NSFileManager，重写其contentsOfDirectoryAtPath方法，甚至不用针对你的程序下手，只需要简简单单地这样做：<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">%hook NSFileManager</span><br><span class="line">- (bool)fileExistsAtPath:(id)arg1&#123;</span><br><span class="line">	if ([arg1 isEqualToString:@&quot;/var/containers/Bundle/Application&quot;])</span><br><span class="line">	&#123;</span><br><span class="line">		NSLog(@&quot;This Device is definitely not JailBroken!&quot;);</span><br><span class="line">		return NO;</span><br><span class="line">	&#125;</span><br><span class="line">	else&#123;</span><br><span class="line">		return %orig;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">%end</span><br></pre></td></tr></table></figure><br><br>之前的程序输出结果就会变成<br><div align="center"><br><img src="media/15232715926878/15236123825134.jpg" style="zoom:40%"><br></div>
+
+<p>。。。<br>好的可以看到我们上面的手段都被轻易地发现并破解了，其实我们可以用c语言实现某些核心代码，c语言不具有Objective-C的runtime特性，这在安全性方面好处颇多，首先你的函数名和参数不会（那么容易）暴露在class-dump和反汇编中，还可以妙用函数指针进一步隐藏函数名和参数表其次，而且相比Objective-C更难被hook，虽然facebook开发了黑科技框架fishhook可以通过替换mach-o里的符号表来hookC函数，但这无疑给攻击者制造了许多障碍。更进一步地，我们还可以使用block、静态内联函数、代码混淆提高分析破解难度，当然这不能让你的APP变得坚不可摧，这只是这场博弈的开始。</p>
+<p>我们来看看用C语言实现越狱检测效果如何，下面这个c函数用于列出该程序已链接的动态库,在越狱机上运行其结果通常会包含MobileSubstrate.dylib之类的东西。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">void DetectDyldInserted()&#123;</span><br><span class="line">    uint32_t count = _dyld_image_count();</span><br><span class="line">    for (uint32_t i = 0 ; i &lt; count; ++i) &#123;</span><br><span class="line">        NSString *name = [[NSString alloc]initWithUTF8String:_dyld_get_image_name(i)];</span><br><span class="line">        NSLog(@&quot;--%@&quot;, name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下来我们试着class-dump以及用hopper分析一下这个程序，看看能不能发现找到蛛丝马迹。</p>
+<p>首先是class-dump,只能看到前面写的OC方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">@interface ViewController : UIViewController</span><br><span class="line">&#123;</span><br><span class="line">    UITextView *_textView;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@property(retain, nonatomic) UITextView *textView; // @synthesize textView=_textView;</span><br><span class="line">- (void).cxx_destruct;</span><br><span class="line">- (void)didReceiveMemoryWarning;</span><br><span class="line">- (void)tryGetApp;</span><br><span class="line">- (_Bool)isJailBroken;</span><br><span class="line">- (void)touchesBegan:(id)arg1 withEvent:(id)arg2;</span><br><span class="line">- (void)viewDidLoad;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>接下来进入hopper分析我们的程序，搜索DetectDyldInserted，结果有点令人失望。<br><img src="media/15232715926878/15236819648796.jpg" alt=""></p>
+<p>定位了函数，hook就是分分钟的事了。那么如何在hopper中隐藏函数名呢？</p>
+<p>首先，最简单的，可以将DetectDyldInserted变为静态内联函数，因为内联函数的代码会被直接嵌入在它被调用的地方，不过需要注意的是，inline只是建议编译器将函数编译成内联函数，通常如果某个inline函数被函数指针指向它就不会被编译成inline函数。</p>
+<p>其次，可以进行代码混淆，这对OC方法同样适用，就是把含义明确的函数名改成一些无意义的字符串，不过要是直接在代码中手写无意义的字符串会导致代码可读性极差，所以比较简单实用的方式是使用宏替换，可以将宏单独写在一个头文件里，还可以写成脚本将函数名替换成随机字符，参考念茜大神的这篇博客<a href="https://blog.csdn.net/yiyaaixuexi/article/details/29201699" target="_blank" rel="noopener">Objective-C代码混淆</a></p>
+<p>上面介绍的还都是增加应用安全性的最基本方法，只是提高了逆向和破解的门槛，对于你的应用和数据安全来说还远远不够，我们可以使用符号表裁剪、反调试反注入、llvm混淆等方法进一步提高应用的安全防护等级。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://yoursite.com/2018/04/21/iOS应用越狱检测与反越狱检测与反反越狱检测/" data-title="iOS应用越狱检测与反越狱检测与反反越狱检测 | Lagagggggg&#39;s blog" data-tsina="" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2018/01/11/iOSRE常用指令/"  title="iOSRE常用操作">
+ <strong>NEXT:</strong><br/> 
+ <span>iOSRE常用操作
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS应用开发者通常不太注意应用的安全防护（一般情况是完全没有防护），而随着越来越多人研究iOS逆向，以及iOS11越狱的发布，iOS的安全防护也应该得到重视。"><span class="toc-number">1.</span> <span class="toc-text">iOS应用开发者通常不太注意应用的安全防护（一般情况是完全没有防护），而随着越来越多人研究iOS逆向，以及iOS11越狱的发布，iOS的安全防护也应该得到重视。</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/iOS/" title="iOS">iOS<sup>1</sup></a></li>
+		
+			<li><a href="/tags/iOSRE/" title="iOSRE">iOSRE<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+      <li><a href="http://blog.codedragon.tech" target="_blank" title="CoSidian">CoSidian</a></li>
+    </ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<div class="social-font clearfix">
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2018 
+		
+		<a href="http://yoursite.com" target="_blank" title="LAgagggggg">LAgagggggg</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:""};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+  </body>
+</html>

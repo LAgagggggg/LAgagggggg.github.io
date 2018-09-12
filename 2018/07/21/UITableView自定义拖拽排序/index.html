@@ -1,0 +1,330 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>UITableView拖拽自定义 | Lagagggggg&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="LAgagggggg">
+    
+    <meta name="description" content="&amp;emsp;今晚准备给一个tableView写个拖拽排序功能，心想UITableView有这个功能，回去写两个代理方法就可以咸鱼了。&amp;emsp;结果emmmmm…
+&amp;emsp;这也太一言难尽了吧，暂且不说拖动时cell在鬼畜，这丑陋的按钮和拖动条也不能忍啊。略经思考我大概懂得了鬼畜的原因：我为了设置">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/lagagggggg.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/lagagggggg.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="Lagagggggg&#39;s blog" title="Lagagggggg&#39;s blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Lagagggggg&#39;s blog">Lagagggggg&#39;s blog</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/07/21/UITableView自定义拖拽排序/" title="UITableView拖拽自定义" itemprop="url">UITableView拖拽自定义</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://yoursite.com" title="LAgagggggg">LAgagggggg</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2018-07-21T06:04:14.000Z" itemprop="datePublished">2018-07-21</time>
+    Updated:<time datetime="2018-09-12T02:18:21.382Z" itemprop="dateModified">2018-09-12</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+		</div>
+		
+		<p>&emsp;今晚准备给一个tableView写个拖拽排序功能，心想UITableView有这个功能，回去写两个代理方法就可以咸鱼了。<br>&emsp;结果emmmmm…</p>
+<p><img src="http://p7klmszrt.bkt.clouddn.com/Image.gif" alt="Image"><br>&emsp;这也太一言难尽了吧，暂且不说拖动时cell在鬼畜，这丑陋的按钮和拖动条也不能忍啊。略经思考我大概懂得了鬼畜的原因：我为了设置cell之间的间隔像下面这样重写了cell的setFrame:方法，而拖动时系统会持续修改cell的frame,于是…</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (void)setFrame:(CGRect)frame&#123;</span><br><span class="line">    frame.origin.y += 14;</span><br><span class="line">    frame.size.height -= 14;</span><br><span class="line">    [super setFrame:frame];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&emsp;总算是没那么鬼畜了，可是这大红色的按钮还是很碍眼，我只想要我简简单单的cell，于是<br><img src="http://p7klmszrt.bkt.clouddn.com/15365950230081.jpg" alt=""><br>&emsp;好吧我们看看文档怎么说<br><img src="http://p7klmszrt.bkt.clouddn.com/15365951121780.jpg" alt=""><br>&emsp;好吧设置了tableView:editingStyleForRowAtIndexPath:方法，那个红艳艳的按钮是不见了，可是还有一段奇怪的indent,我注意到UITableViewCell有个shouldIndentWhileEditing属性，当我尝试设置这个属性为NO多次未果后我意识到是不是要在tableView:editingStyleForRowAtIndexPath:方法返回之后设置shouldIndentWhileEditing才有效，于是我把cell.shouldIndentWhileEditing=NO放在了tableView willDisplayCell:forRowAtIndexPath:方法里，indent消失了，好坑啊…</p>
+<p>&emsp;接下来我们还要除去这碍眼的拖动条，我在UITableView和UITableViewCell的文档里仅仅发现了一个showsReorderControl属性，然而，在设置了该属性为NO后，我就完全无法拖动cell了！而我想要的是可以触摸任何位置拖动的cell啊。而这个拖动条控件似乎是个私有属性，那么我们似乎不得不用点黑魔法了。以下代码通过runtime获取cell的属性列表并打印出来。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">unsigned int count=0;</span><br><span class="line">    Ivar * properties=class_copyIvarList([UITableViewCell class], &amp;count);</span><br><span class="line">    for (int i=0; i&lt;count; i++) &#123;</span><br><span class="line">        Ivar var=properties[i];</span><br><span class="line">        const char * varName=ivar_getName(var);</span><br><span class="line">        const char * varType=ivar_getTypeEncoding(var);</span><br><span class="line">        NSLog(@&quot;%s--%s&quot;,varName,varType);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>&emsp;然而，很尴尬，打出来的log中并没有可疑的属性。苦思未果的我只好用了下面这种更dirty的办法，通过遍历cell的subviews找到拖动条，将其图片设置为nil并将其拉伸为整个cell的大小。要是哪位大神知道比较优雅的方法还望指教…【拱手】</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">- (void)hideReorderControlForCell:(CategoryManagerCell *)cell&#123;</span><br><span class="line">    if (!cell.hasHideReorderControl) &#123;</span><br><span class="line">        for (UIView * view in cell.subviews) &#123;</span><br><span class="line">            Class reorderClass = NSClassFromString(@&quot;UITableViewCellReorderControl&quot;);</span><br><span class="line">            if ([view isMemberOfClass:reorderClass]) &#123;</span><br><span class="line">                [view mas_makeConstraints:^(MASConstraintMaker *make) &#123;</span><br><span class="line">                    make.left.equalTo(cell.mas_left);</span><br><span class="line">                    make.right.equalTo(cell.mas_right);</span><br><span class="line">                    make.top.equalTo(cell.mas_top);</span><br><span class="line">                    make.bottom.equalTo(cell.mas_bottom);</span><br><span class="line">                &#125;];</span><br><span class="line">                for (UIImageView * imgView in view.subviews) &#123;</span><br><span class="line">                    imgView.image=nil;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        cell.hasHideReorderControl=YES;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>后记</strong>：我突然想到了个稍微优雅点但可能还是很不规范的实现，我们可以重写cell的addSubview:，如果加入的view是UITableViewCellReorderControl类的，就做一些处理,像下面这样。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">- (void)addSubview:(UIView *)view&#123;</span><br><span class="line">    [super addSubview:view];</span><br><span class="line">    if ([view isMemberOfClass:NSClassFromString(@&quot;UITableViewCellReorderControl&quot;)]) &#123;</span><br><span class="line">        [view mas_makeConstraints:^(MASConstraintMaker *make) &#123;</span><br><span class="line">            make.left.equalTo(self.mas_left);</span><br><span class="line">            make.right.equalTo(self.mas_right);</span><br><span class="line">            make.top.equalTo(self.mas_top);</span><br><span class="line">            make.bottom.equalTo(self.mas_bottom);</span><br><span class="line">        &#125;];</span><br><span class="line">        for (UIImageView * imgView in view.subviews) &#123;</span><br><span class="line">            imgView.image=nil;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<p>&emsp;于是得到了这样的效果，好了不少但还是有点丑…特别是这奇怪的阴影。<br><img src="http://p7klmszrt.bkt.clouddn.com/Image 2.gif" alt="Image 2"><br>&emsp;为了消除这阴影，我们还是首先用runtime方法查看UITableView的私有属性，然而我才疏学浅，找遍了UITableView和UITableViewCell的私有方法和实例变量都没能找到相关方法，只是知道了这阴影是由两个UIShadowView组成的，看来得用点更黑的魔法了…<br>&emsp;我们首先通过class_copyMethodList()获得UIShadowView的方法列表，在打出的log中可以看到setShadowImage:forEdge:inside:这个方法很可疑，接下来我们就着手用我们的方法替代setShadowImage:forEdge:inside:方法，具体代码如下.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">- (void)exchangeShadowMethod&#123;</span><br><span class="line">    Class class = objc_getClass(&quot;UIShadowView&quot;);</span><br><span class="line">//    unsigned int count=0;</span><br><span class="line">//    Method * methods = class_copyMethodList(class, &amp;count);</span><br><span class="line">//    for (int i=0; i&lt;count; i++) &#123;</span><br><span class="line">//        Method method=methods[i];</span><br><span class="line">//        const char * methodName=sel_getName(method_getName(method));</span><br><span class="line">//        const char * methodType=method_getTypeEncoding(method);</span><br><span class="line">//        NSLog(@&quot;%s--%s&quot;,methodName,methodType);</span><br><span class="line">//    &#125;</span><br><span class="line">    SEL originalSelector = @selector(setShadowImage:forEdge:inside:);</span><br><span class="line">    SEL mySelector = @selector(fakeMethodForShadow);</span><br><span class="line">    if (class_respondsToSelector(class, originalSelector)) &#123;</span><br><span class="line">        Method originalMethod = class_getInstanceMethod(class, originalSelector);</span><br><span class="line">        Method myMethod = class_getInstanceMethod([self class], mySelector);</span><br><span class="line">        IMP originalImp = method_getImplementation(originalMethod);</span><br><span class="line">        IMP myImp = method_getImplementation(myMethod);</span><br><span class="line">        class_replaceMethod([self class], mySelector, originalImp, method_getTypeEncoding(myMethod));</span><br><span class="line">        class_replaceMethod(class, originalSelector,myImp, method_getTypeEncoding(originalMethod));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)fakeMethodForShadow</span><br><span class="line">&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&emsp;我们所做的就是交换了setShadowImage:forEdge:inside:和我们的fakeMethodForShadow的实现，接下来我们为了我们的黑魔法不影响应用的其他部分，在viewDidAppear和ViewDidDisappear中做些调整即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewDidAppear:(BOOL)animated&#123;</span><br><span class="line">    [super viewDidAppear:animated];</span><br><span class="line">    [self exchangeShadowMethod];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)viewDidDisappear:(BOOL)animated&#123;</span><br><span class="line">    [super viewDidDisappear:animated];</span><br><span class="line">    [self exchangeShadowMethod];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&emsp;最终效果如下，算是基本上满足了我们的需求吧<br><img src="http://p7klmszrt.bkt.clouddn.com/Image 3.gif" alt="Image 3"></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/iOS/">iOS</a>
+  </div>
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://yoursite.com/2018/07/21/UITableView自定义拖拽排序/" data-title="UITableView拖拽自定义 | Lagagggggg&#39;s blog" data-tsina="" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2018/04/21/iOS应用越狱检测与反越狱检测与反反越狱检测/"  title="iOS应用越狱检测与反越狱检测与反反越狱检测">
+ <strong>NEXT:</strong><br/> 
+ <span>iOS应用越狱检测与反越狱检测与反反越狱检测
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/iOS/" title="iOS">iOS<sup>2</sup></a></li>
+		
+			<li><a href="/tags/iOSRE/" title="iOSRE">iOSRE<sup>2</sup></a></li>
+		
+			<li><a href="/tags/iOSw/" title="iOSw">iOSw<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+      <li><a href="http://blog.codedragon.tech" target="_blank" title="CoSidian">CoSidian</a></li>
+    </ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<div class="social-font clearfix">
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2018 
+		
+		<a href="http://yoursite.com" target="_blank" title="LAgagggggg">LAgagggggg</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:""};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+  </body>
+</html>

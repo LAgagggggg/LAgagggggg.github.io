@@ -76,7 +76,7 @@
     </p>
   <p class="article-time">
     <time datetime="2018-01-11T09:11:01.000Z" itemprop="datePublished">2018-01-11</time>
-    Updated:<time datetime="2018-04-08T10:47:22.129Z" itemprop="dateModified">2018-04-08</time>
+    Updated:<time datetime="2018-10-18T10:41:10.232Z" itemprop="dateModified">2018-10-18</time>
     
   </p>
 </header>
@@ -85,7 +85,7 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#dumpdecrypted"><span class="toc-number">1.</span> <span class="toc-text">dumpdecrypted</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#grep"><span class="toc-number">2.</span> <span class="toc-text">grep</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看syslog"><span class="toc-number">3.</span> <span class="toc-text">查看syslog</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看某个类中方法的真实地址"><span class="toc-number">4.</span> <span class="toc-text">查看某个类中方法的真实地址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#找到按钮调用的响应函数"><span class="toc-number">5.</span> <span class="toc-text">找到按钮调用的响应函数</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#dumpdecrypted"><span class="toc-number">1.</span> <span class="toc-text">dumpdecrypted</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#grep"><span class="toc-number">2.</span> <span class="toc-text">grep</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看syslog"><span class="toc-number">3.</span> <span class="toc-text">查看syslog</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看某个类中方法的真实地址"><span class="toc-number">4.</span> <span class="toc-text">查看某个类中方法的真实地址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#找到按钮调用的响应函数"><span class="toc-number">5.</span> <span class="toc-text">找到按钮调用的响应函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#otool查看可执行文件是否砸壳"><span class="toc-number">6.</span> <span class="toc-text">otool查看可执行文件是否砸壳</span></a></li></ol>
 		</div>
 		
 		<h2 id="dumpdecrypted"><a href="#dumpdecrypted" class="headerlink" title="dumpdecrypted"></a>dumpdecrypted</h2><p>ps命令定位可执行文件</p>
@@ -98,6 +98,7 @@
 <h2 id="查看syslog"><a href="#查看syslog" class="headerlink" title="查看syslog"></a>查看syslog</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">socat - UNIX-CONNECT:/var/run/lockdown/syslog.sock</span><br></pre></td></tr></table></figure>
 <h2 id="查看某个类中方法的真实地址"><a href="#查看某个类中方法的真实地址" class="headerlink" title="查看某个类中方法的真实地址"></a>查看某个类中方法的真实地址</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">po [SOMECLASS _shortMethodDescription]</span><br></pre></td></tr></table></figure>
 <h2 id="找到按钮调用的响应函数"><a href="#找到按钮调用的响应函数" class="headerlink" title="找到按钮调用的响应函数"></a>找到按钮调用的响应函数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cy# [button allTargets]</span><br><span class="line">[NSSet setWithArray:@[#&quot;&lt;ComposeButtonItem: 0x14609d00&gt;&quot;]]</span><br><span class="line">cy# [button allControlEvents]</span><br><span class="line">64</span><br><span class="line">cy# [button actionForTargets:#xxxxxxx forControlEvent:64]</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h2 id="otool查看可执行文件是否砸壳"><a href="#otool查看可执行文件是否砸壳" class="headerlink" title="otool查看可执行文件是否砸壳"></a>otool查看可执行文件是否砸壳</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">otool -arch arm64 -l xxx | grep crypt</span><br></pre></td></tr></table></figure>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -150,7 +151,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#dumpdecrypted"><span class="toc-number">1.</span> <span class="toc-text">dumpdecrypted</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#grep"><span class="toc-number">2.</span> <span class="toc-text">grep</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看syslog"><span class="toc-number">3.</span> <span class="toc-text">查看syslog</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看某个类中方法的真实地址"><span class="toc-number">4.</span> <span class="toc-text">查看某个类中方法的真实地址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#找到按钮调用的响应函数"><span class="toc-number">5.</span> <span class="toc-text">找到按钮调用的响应函数</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#dumpdecrypted"><span class="toc-number">1.</span> <span class="toc-text">dumpdecrypted</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#grep"><span class="toc-number">2.</span> <span class="toc-text">grep</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看syslog"><span class="toc-number">3.</span> <span class="toc-text">查看syslog</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看某个类中方法的真实地址"><span class="toc-number">4.</span> <span class="toc-text">查看某个类中方法的真实地址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#找到按钮调用的响应函数"><span class="toc-number">5.</span> <span class="toc-text">找到按钮调用的响应函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#otool查看可执行文件是否砸壳"><span class="toc-number">6.</span> <span class="toc-text">otool查看可执行文件是否砸壳</span></a></li></ol>
   </div>
 
 <div id="asidepart">

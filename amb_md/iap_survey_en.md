@@ -6,6 +6,10 @@ Dear AllMyBatteries user, we truly care about your user experience, so here we s
 
 [Survey Link](https://docs.google.com/forms/d/e/1FAIpQLSeu0uwnEmdMI1rWNm7L5fOT0DOMSuIlopP8muc8ve1MJvLyFA/viewform?usp=sf_link)
 
+---
+
+Note that we can't get back to you from this survey, so if you want to feedback something that need my response or seek for help please [email me](mailto:lagagggggg@gmail.com).
+
 ___
 
 </font>

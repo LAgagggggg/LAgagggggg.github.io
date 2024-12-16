@@ -3,57 +3,103 @@
 <head>
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width'>
-    <title>Jiayin Li</title>
+    <title>Jiayin Li | Personal Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2em;
-            background-color: #f5f5f5;
-            color: #333;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2c3e50 100%);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .container {
-            background-color: white;
-            padding: 3em;
-            border-radius: 10px;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2em;
+            text-align: center;
         }
 
-        .greeting {
-            font-size: 2.5em;
-            color: #2c3e50;
+        .header {
+            padding: 4em 0;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 3px solid #3498db;
+            padding: 5px;
+            margin-bottom: 2em;
+            animation: pulse 2s infinite;
+        }
+
+        .name {
+            font-size: 3em;
             margin-bottom: 0.5em;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        p {
-            font-size: 1.2em;
-            color: #34495e;
-            margin-bottom: 1.5em;
+        .title {
+            font-size: 1.5em;
+            color: #bdc3c7;
+            margin-bottom: 2em;
         }
 
         .email-link {
-            display: inline-block;
-            padding: 12px 24px;
-            background-color: #3498db;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 1em 2em;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
             color: white;
             text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
+            border-radius: 30px;
+            font-size: 1.2em;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .email-link:hover {
-            background-color: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.4); }
+            70% { box-shadow: 0 0 0 20px rgba(52, 152, 219, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(52, 152, 219, 0); }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <strong class="greeting">Hi!</strong>
-        <p>I'm Jiayin Li</p>
-        <a href="mailto:lagagggggg@gmail.com" class="email-link">Email Me</a>
+        <header class="header">
+            <img src="/img/me.jpg" alt="Profile Picture" class="profile-img">
+            <h1 class="name">Jiayin Li</h1>
+            <p class="title">Software Developer</p>
+            <a href="mailto:lagagggggg@gmail.com" class="email-link">
+                <i class="fas fa-envelope"></i>
+                lagagggggg@gmail.com
+            </a>
+        </header>
     </div>
 </body>
 </html>
